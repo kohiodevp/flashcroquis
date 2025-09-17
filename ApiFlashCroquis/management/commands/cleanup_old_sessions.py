@@ -7,7 +7,7 @@ Usage: python manage.py cleanup_old_sessions
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from datetime import timedelta
-from flashcroquis.models import ProjectSession, GeneratedFile
+from ApiFlashCroquis.models import ProjectSession, GeneratedFile
 
 
 class Command(BaseCommand):
@@ -69,7 +69,7 @@ class Command(BaseCommand):
             self.stdout.write(f"{deleted_files} fichiers générés supprimés")
 
         # Nettoyer les fichiers temporaires
-        from flashcroquis.utils import cleanup_temp_files
+        from ApiFlashCroquis.utils import cleanup_temp_files
         temp_cleaned = cleanup_temp_files()
         self.stdout.write(f"{temp_cleaned} fichiers temporaires supprimés")
 
