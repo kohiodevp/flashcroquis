@@ -356,7 +356,7 @@ RUN pip install -r requirements.txt
 COPY . /app
 WORKDIR /app
 EXPOSE 8000
-CMD ["gunicorn", "ApiFlashCroquis.wsgi:application"]
+CMD ["gunicorn", "flashcroquis.wsgi:application"]
 ```
 
 ### Production
@@ -369,7 +369,7 @@ pip install gunicorn psycopg2-binary
 python manage.py collectstatic --noinput
 
 # Lancer avec Gunicorn
-gunicorn ApiFlashCroquis.wsgi:application \
+gunicorn flashcroquis.wsgi:application \
   --bind 0.0.0.0:8000 \
   --workers 4 \
   --timeout 300

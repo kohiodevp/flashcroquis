@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django_filters',
     
     # Local apps
-    'flashcroquis',  # Notre application principale
+    'ApiFlashCroquis',  # Notre application principale
 ]
 
 MIDDLEWARE = [
@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    'EXCEPTION_HANDLER': 'flashcroquis.utils.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'ApiFlashCroquis.utils.custom_exception_handler',
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
     'DATE_FORMAT': '%Y-%m-%d',
     'TIME_FORMAT': '%H:%M:%S',
@@ -175,7 +175,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://127.0.0.1:3000",
     "http://localhost:8080",  # Vue dev server
+    "https://localhost:8000",  # Vue dev server
+    "http://localhost:8000",  # Vue dev server
     "http://127.0.0.1:8080",
+    "https://127.0.0.1:8000",
+    "http://127.0.0.1:8000",
+    "https://*.github.dev"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only in development

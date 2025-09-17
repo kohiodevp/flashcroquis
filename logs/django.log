@@ -1,0 +1,342 @@
+[INFO] 2025-09-16 16:00:32,545 django.utils.autoreload 8244 138857147774784 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:02:30,538 django.utils.autoreload 9213 133940498249536 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:03:06,674 django.utils.autoreload 9655 128885612123968 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:04:13,451 django.utils.autoreload 10315 128341246203712 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:05:00,182 django.utils.autoreload 10808 133119422965568 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:05:18,449 django.utils.autoreload 10998 137503500904256 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:06:43,982 django.utils.autoreload 11756 132369531434816 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:08:52,149 django.utils.autoreload 12970 130367268558656 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:17,201 django.utils.autoreload 12970 130367268558656 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:17,589 django.utils.autoreload 14428 126114180101952 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:19,869 django.utils.autoreload 14428 126114180101952 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:20,252 django.utils.autoreload 14467 128595452598080 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:24,576 django.utils.autoreload 14467 128595452598080 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:24,939 django.utils.autoreload 14532 139018792138560 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:28,235 django.utils.autoreload 14532 139018792138560 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:28,599 django.utils.autoreload 14570 135862177613632 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:29,858 django.utils.autoreload 14570 135862177613632 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:30,216 django.utils.autoreload 14580 134837580543808 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:48,195 django.utils.autoreload 14580 134837580543808 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:48,586 django.utils.autoreload 14736 127352835786560 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:51,096 django.utils.autoreload 14736 127352835786560 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:51,467 django.utils.autoreload 14775 130975889618752 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:12:57,053 django.utils.autoreload 14775 130975889618752 /workspaces/flashcroquis/flashcroquis/settings.py changed, reloading.
+[INFO] 2025-09-16 16:12:57,420 django.utils.autoreload 14847 125633779345216 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:13:50,146 django.utils.autoreload 15286 130709902268224 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:17:14,055 django.utils.autoreload 16747 133535570257728 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:19:45,588 django.utils.autoreload 17871 133173850339136 Watching for file changes with StatReloader
+[WARNING] 2025-09-16 16:20:12,986 django.request 17871 133173715400384 Not Found: /
+[WARNING] 2025-09-16 16:20:12,987 django.server 17871 133173715400384 "GET / HTTP/1.1" 404 7046
+[WARNING] 2025-09-16 16:20:13,343 django.request 17871 133173707007680 Not Found: /favicon.ico
+[WARNING] 2025-09-16 16:20:13,344 django.server 17871 133173707007680 "GET /favicon.ico HTTP/1.1" 404 7097
+[INFO] 2025-09-16 16:20:56,843 django.server 17871 133173698614976 "GET /swagger/ HTTP/1.1" 200 1663
+[INFO] 2025-09-16 16:20:57,065 django.server 17871 133173715400384 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui-bundle.js HTTP/1.1" 200 1046583
+[INFO] 2025-09-16 16:20:57,070 django.server 17871 133173707007680 "GET /static/drf-yasg/insQ.min.js HTTP/1.1" 200 2093
+[INFO] 2025-09-16 16:20:57,260 django.server 17871 133173690222272 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui.css HTTP/1.1" 200 145206
+[INFO] 2025-09-16 16:20:57,288 django.server 17871 133173681829568 "GET /static/drf-yasg/style.css HTTP/1.1" 200 1047
+[INFO] 2025-09-16 16:20:57,299 django.server 17871 133173673436864 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui-standalone-preset.js HTTP/1.1" 200 322863
+[INFO] 2025-09-16 16:20:57,299 django.server 17871 133173665044160 "GET /static/drf-yasg/immutable.min.js HTTP/1.1" 200 56904
+[INFO] 2025-09-16 16:20:57,316 django.server 17871 133173178529472 "GET /static/drf-yasg/swagger-ui-init.js HTTP/1.1" 200 15480
+[INFO] 2025-09-16 16:20:59,043 django.server 17871 133173698614976 "GET /static/drf-yasg/swagger-ui-dist/favicon-32x32.png HTTP/1.1" 200 628
+[INFO] 2025-09-16 16:20:59,151 django.server 17871 133173170136768 "GET /swagger/?format=openapi HTTP/1.1" 200 42269
+[INFO] 2025-09-16 16:21:59,372 django.server 17871 133173178529472 "GET /swagger/?format=openapi HTTP/1.1" 200 42269
+[INFO] 2025-09-16 16:25:56,473 django.utils.autoreload 17871 133173850339136 /workspaces/flashcroquis/manage.py changed, reloading.
+[INFO] 2025-09-16 16:26:13,015 django.utils.autoreload 20734 124800186124096 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:36:20,899 django.utils.autoreload 27134 129304423933760 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:36:31,214 django.server 27134 129304285411008 "GET /swagger/ HTTP/1.1" 200 1663
+[INFO] 2025-09-16 16:36:31,769 django.server 27134 129304277018304 "GET /static/drf-yasg/style.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,771 django.server 27134 129304268625600 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,775 django.server 27134 129304260232896 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui-bundle.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,780 django.server 27134 129304251840192 "GET /static/drf-yasg/insQ.min.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,783 django.server 27134 129304243447488 "GET /static/drf-yasg/swagger-ui-dist/swagger-ui-standalone-preset.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,787 django.server 27134 129304235054784 "GET /static/drf-yasg/immutable.min.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:31,809 django.server 27134 129303748540096 "GET /static/drf-yasg/swagger-ui-init.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:32,259 django.server 27134 129304285411008 "GET /static/drf-yasg/swagger-ui-dist/favicon-32x32.png HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:36:32,375 django.server 27134 129303740147392 "GET /swagger/?format=openapi HTTP/1.1" 200 42269
+[INFO] 2025-09-16 16:37:28,920 django.utils.autoreload 27818 137860551616320 Watching for file changes with StatReloader
+[WARNING] 2025-09-16 16:38:47,814 django.request 27818 137860487313088 Not Found: /admin/
+[WARNING] 2025-09-16 16:38:47,815 django.server 27818 137860487313088 "GET /admin/ HTTP/1.1" 404 7085
+[INFO] 2025-09-16 16:41:10,750 django.utils.autoreload 27818 137860551616320 /workspaces/flashcroquis/ApiFlashCroquis/urls.py changed, reloading.
+[INFO] 2025-09-16 16:41:11,122 django.utils.autoreload 29395 134994729789248 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:41:33,816 django.utils.autoreload 29395 134994729789248 /workspaces/flashcroquis/ApiFlashCroquis/urls.py changed, reloading.
+[INFO] 2025-09-16 16:41:34,186 django.utils.autoreload 29592 130522909480768 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:41:41,719 django.server 29592 130522776860352 "GET /admin/ HTTP/1.1" 302 0
+[INFO] 2025-09-16 16:41:41,988 django.server 29592 130522767419072 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4236
+[INFO] 2025-09-16 16:41:42,393 django.server 29592 130522759026368 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+[INFO] 2025-09-16 16:41:42,428 django.server 29592 130522749585088 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[INFO] 2025-09-16 16:41:42,459 django.server 29592 130522741192384 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+[INFO] 2025-09-16 16:41:42,467 django.server 29592 130522732799680 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[INFO] 2025-09-16 16:41:42,472 django.server 29592 130522724406976 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[INFO] 2025-09-16 16:41:42,475 django.server 29592 130522244183744 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+[INFO] 2025-09-16 16:41:42,774 django.server 29592 130522776860352 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[INFO] 2025-09-16 16:42:00,230 django.server 29592 130522767419072 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[INFO] 2025-09-16 16:42:00,414 django.server 29592 130522759026368 "GET /admin/ HTTP/1.1" 200 12302
+[INFO] 2025-09-16 16:42:00,636 django.server 29592 130522741192384 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[INFO] 2025-09-16 16:42:00,813 django.server 29592 130522749585088 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[INFO] 2025-09-16 16:42:00,816 django.server 29592 130522724406976 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[ERROR] 2025-09-16 16:42:21,567 django.request 29592 130522732799680 Internal Server Error: /admin/ApiFlashCroquis/generatedfile/
+Traceback (most recent call last):
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: generated_files
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 867, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/views/main.py", line 146, in __init__
+    self.get_results(request)
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/views/main.py", line 313, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/paginator.py", line 110, in count
+    return c()
+           ^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: generated_files
+[ERROR] 2025-09-16 16:42:21,572 django.server 29592 130522732799680 "GET /admin/ApiFlashCroquis/generatedfile/ HTTP/1.1" 500 219076
+[INFO] 2025-09-16 16:42:32,643 django.server 29592 130522741192384 "GET /admin/ HTTP/1.1" 200 12302
+[INFO] 2025-09-16 16:42:36,890 django.server 29592 130522749585088 "GET /admin/auth/user/ HTTP/1.1" 200 16032
+[INFO] 2025-09-16 16:42:37,107 django.server 29592 130522724406976 "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+[INFO] 2025-09-16 16:42:37,202 django.server 29592 130522244183744 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[INFO] 2025-09-16 16:42:37,208 django.server 29592 130522732799680 "GET /admin/jsi18n/ HTTP/1.1" 200 8634
+[INFO] 2025-09-16 16:42:37,215 django.server 29592 130522767419072 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+[INFO] 2025-09-16 16:42:37,218 django.server 29592 130522759026368 "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+[INFO] 2025-09-16 16:42:37,221 django.server 29592 130522741192384 "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[INFO] 2025-09-16 16:42:37,225 django.server 29592 130522749585088 "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[INFO] 2025-09-16 16:42:37,227 django.server 29592 130522724406976 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[INFO] 2025-09-16 16:42:37,229 django.server 29592 130522776860352 "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[INFO] 2025-09-16 16:42:37,252 django.server 29592 130522732799680 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[INFO] 2025-09-16 16:42:37,274 django.server 29592 130522234742464 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[INFO] 2025-09-16 16:42:37,330 django.server 29592 130522226349760 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[INFO] 2025-09-16 16:42:37,956 django.server 29592 130522226349760 "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[INFO] 2025-09-16 16:42:38,019 django.server 29592 130522776860352 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[INFO] 2025-09-16 16:42:38,032 django.server 29592 130522767419072 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[INFO] 2025-09-16 16:42:38,035 django.server 29592 130522759026368 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[INFO] 2025-09-16 16:42:58,754 django.server 29592 130522776860352 "GET /admin/ HTTP/1.1" 200 12302
+[INFO] 2025-09-16 16:43:14,024 django.utils.autoreload 29592 130522909480768 /workspaces/flashcroquis/ApiFlashCroquis/urls.py changed, reloading.
+[INFO] 2025-09-16 16:43:14,416 django.utils.autoreload 30496 126169019832128 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:46:35,763 django.utils.autoreload 30496 126169019832128 /workspaces/flashcroquis/ApiFlashCroquis/urls.py changed, reloading.
+[INFO] 2025-09-16 16:46:36,131 django.utils.autoreload 31915 134949853001536 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:46:37,596 django.utils.autoreload 31915 134949853001536 /workspaces/flashcroquis/ApiFlashCroquis/urls.py changed, reloading.
+[INFO] 2025-09-16 16:46:37,958 django.utils.autoreload 31936 124593290180416 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:47:53,860 django.utils.autoreload 31936 124593290180416 /workspaces/flashcroquis/ApiFlashCroquis/admin.py changed, reloading.
+[INFO] 2025-09-16 16:47:54,258 django.utils.autoreload 32486 125316185802560 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:47:55,764 django.utils.autoreload 32486 125316185802560 /workspaces/flashcroquis/ApiFlashCroquis/admin.py changed, reloading.
+[INFO] 2025-09-16 16:47:56,126 django.utils.autoreload 32519 124857957340992 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:48:01,681 django.utils.autoreload 32519 124857957340992 /workspaces/flashcroquis/ApiFlashCroquis/admin.py changed, reloading.
+[INFO] 2025-09-16 16:48:02,044 django.utils.autoreload 32579 126982924556096 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:48:27,871 django.utils.autoreload 32816 124192797108032 Watching for file changes with StatReloader
+[INFO] 2025-09-16 16:48:37,607 django.server 32816 124192665106112 "GET /admin/ HTTP/1.1" 302 0
+[INFO] 2025-09-16 16:48:37,887 django.server 32816 124192655664832 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4238
+[INFO] 2025-09-16 16:48:38,349 django.server 32816 124192647272128 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,351 django.server 32816 124192638879424 "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,361 django.server 32816 124192630486720 "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,371 django.server 32816 124192622094016 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,373 django.server 32816 124192613701312 "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,375 django.server 32816 124192133478080 "GET /static/admin/css/login.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:38,654 django.server 32816 124192125085376 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:48:46,512 django.server 32816 124192638879424 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4484
+[INFO] 2025-09-16 16:48:59,726 django.server 32816 124192133478080 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[INFO] 2025-09-16 16:48:59,919 django.server 32816 124192613701312 "GET /admin/ HTTP/1.1" 200 12306
+[INFO] 2025-09-16 16:49:00,128 django.server 32816 124192125085376 "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:00,314 django.server 32816 124192665106112 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:00,321 django.server 32816 124192655664832 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,332 django.server 32816 124192125085376 "GET /admin/auth/user/ HTTP/1.1" 200 16034
+[INFO] 2025-09-16 16:49:12,552 django.server 32816 124192665106112 "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,563 django.server 32816 124192638879424 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,570 django.server 32816 124192655664832 "GET /admin/jsi18n/ HTTP/1.1" 200 8634
+[INFO] 2025-09-16 16:49:12,571 django.server 32816 124192630486720 "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,573 django.server 32816 124192647272128 "GET /static/admin/js/core.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,575 django.server 32816 124192622094016 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,578 django.server 32816 124192133478080 "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,581 django.server 32816 124192613701312 "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,585 django.server 32816 124192665106112 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,587 django.server 32816 124192125085376 "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,649 django.server 32816 124192655664832 "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,654 django.server 32816 124192638879424 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,816 django.server 32816 124192647272128 "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,835 django.server 32816 124192622094016 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,840 django.server 32816 124192133478080 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:12,845 django.server 32816 124192613701312 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+[INFO] 2025-09-16 16:49:27,307 django.server 32816 124192647272128 "GET /admin/auth/ HTTP/1.1" 200 6240
+[INFO] 2025-09-16 16:49:30,452 django.server 32816 124192622094016 "GET /admin/auth/user/ HTTP/1.1" 200 16034
+[ERROR] 2025-09-16 16:49:33,586 django.request 32816 124192613701312 Internal Server Error: /admin/ApiFlashCroquis/maprender/
+Traceback (most recent call last):
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: map_renders
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/options.py", line 867, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/views/main.py", line 146, in __init__
+    self.get_results(request)
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/contrib/admin/views/main.py", line 313, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/core/paginator.py", line 110, in count
+    return c()
+           ^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.python/current/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: map_renders
+[ERROR] 2025-09-16 16:49:33,591 django.server 32816 124192613701312 "GET /admin/ApiFlashCroquis/maprender/ HTTP/1.1" 500 218735
+[INFO] 2025-09-16 16:49:37,251 django.server 32816 124192665106112 "GET /admin/auth/user/ HTTP/1.1" 200 16034
+[INFO] 2025-09-16 17:00:23,239 ApiFlashCroquis.qgis_utils 38373 136444652504896 === DÉBUT DE L'INITIALISATION QGIS ===
+[INFO] 2025-09-16 17:00:23,240 ApiFlashCroquis.qgis_utils 38373 136444652504896 Environnement QGIS configuré
+[ERROR] 2025-09-16 17:00:23,240 ApiFlashCroquis.qgis_utils 38373 136444652504896 Erreur d'initialisation: No module named 'PyQt5'
+[INFO] 2025-09-16 17:02:38,980 ApiFlashCroquis.qgis_utils 39835 130435693176640 === DÉBUT DE L'INITIALISATION QGIS ===
+[INFO] 2025-09-16 17:02:38,980 ApiFlashCroquis.qgis_utils 39835 130435693176640 Environnement QGIS configuré
+[ERROR] 2025-09-16 17:02:38,980 ApiFlashCroquis.qgis_utils 39835 130435693176640 Erreur d'initialisation: No module named 'PyQt5'
+[INFO] 2025-09-16 17:09:38,804 ApiFlashCroquis.qgis_utils 43336 125716450486080 === DÉBUT DE L'INITIALISATION QGIS ===
+[INFO] 2025-09-16 17:09:38,805 ApiFlashCroquis.qgis_utils 43336 125716450486080 Environnement QGIS configuré
+[ERROR] 2025-09-16 17:09:38,805 ApiFlashCroquis.qgis_utils 43336 125716450486080 Erreur d'initialisation: No module named 'PyQt5'
+[INFO] 2025-09-16 17:11:00,050 ApiFlashCroquis.qgis_utils 44029 133358513358656 === DÉBUT DE L'INITIALISATION QGIS ===
+[INFO] 2025-09-16 17:11:00,050 ApiFlashCroquis.qgis_utils 44029 133358513358656 Environnement QGIS configuré
+[ERROR] 2025-09-16 17:11:00,306 ApiFlashCroquis.qgis_utils 44029 133358513358656 Erreur d'initialisation: No module named 'qgis'
+[INFO] 2025-09-16 17:12:05,848 ApiFlashCroquis.qgis_utils 44651 139719534122816 === DÉBUT DE L'INITIALISATION QGIS ===
+[INFO] 2025-09-16 17:12:05,848 ApiFlashCroquis.qgis_utils 44651 139719534122816 Environnement QGIS configuré
+[ERROR] 2025-09-16 17:12:05,860 ApiFlashCroquis.qgis_utils 44651 139719534122816 Erreur d'initialisation: No module named 'qgis'

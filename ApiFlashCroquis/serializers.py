@@ -259,7 +259,7 @@ class RenderMapSerializer(serializers.Serializer):
     dpi = serializers.IntegerField(default=96, min_value=72, max_value=300)
     format_image = serializers.ChoiceField(choices=['png', 'jpg', 'jpeg'], default='png')
     quality = serializers.IntegerField(default=90, min_value=1, max_value=100)
-    background = serializers.CharField(max_length=20, default='transparent')
+    c = serializers.CharField(max_length=20, default='transparent')
     bbox = serializers.CharField(max_length=255, required=False)
     scale = serializers.FloatField(required=False)
     

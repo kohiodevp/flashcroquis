@@ -351,6 +351,6 @@ class LayerStyleAdmin(admin.ModelAdmin):
 
 
 # Configuration de l'interface d'administration
-admin.site.site_header = "FlashCroquis Administration"
-admin.site.site_title = "FlashCroquis Admin"
-admin.site.index_title = "Bienvenue dans l'administration FlashCroquis"
+admin.site.site_header = "Flash Croquis Administration"
+admin.site.site_title = "Flash Croquis Admin"
+admin.site.index_title = "Bienvenue dans l'administration Flash Croquis"

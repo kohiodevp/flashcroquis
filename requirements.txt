@@ -1,0 +1,7 @@
+django
+djangorestframework
+drf-yasg
+django-cors-headers
+filters-django
+django-filter
+PyQt5
