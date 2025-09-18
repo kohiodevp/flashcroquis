@@ -37,7 +37,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/map/', include([
         path('render/', MapViewSet.as_view({'post': 'render_map'}), name='render-map'),
-        path('generate-pdf/', MapViewSet.as_view({'post': 'generate_advanced_pdf'}), name='generate-pdf'),
         path('parcelle-detail/', MapViewSet.as_view({'post': 'parcelle_detail'}), name='parcelle-detail'),
         path('generate-croquis/', MapViewSet.as_view({'post': 'generate_croquis'}), name='generate-croquis'),
     ])),

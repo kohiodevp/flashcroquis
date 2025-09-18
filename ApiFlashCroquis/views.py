@@ -18,10 +18,13 @@ from .serializers import (
 )
 from typing import Dict, Any, Optional, List
 import math
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
 # Configuration du logger
 logger = logging.getLogger(__name__)
 
+# [Code QGISManager et fonctions utilitaires conservé tel quel...]
 # Gestionnaire QGIS
 class QGISManager:
     def __init__(self):
@@ -40,11 +43,11 @@ class QGISManager:
             
         self._initialization_attempted = True
         try:
-            # Configuration de l'environnement
-            import os
-            os.environ['QT_NO_CPU_FEATURE'] = 'sse4.1,sse4.2,avx,avx2'
+            # Configuration de l'environnement QGIS
+            self._setup_qgis_environment()
             
             # Importation des classes QGIS
+            from qgis.PyQt.QtCore import Qt
             from qgis.core import (
                 QgsApplication, QgsProject, QgsVectorLayer, QgsRasterLayer,
                 QgsMapSettings, QgsMapRendererParallelJob, QgsRectangle,
@@ -53,7 +56,10 @@ class QGISManager:
                 QgsLayoutItemMap, QgsLayoutItemLegend, QgsLayerTreeModel,
                 QgsLayerTreeLayer, QgsLayerTreeGroup, QgsSingleSymbolRenderer,
                 QgsFillSymbol, QgsLineSymbol, QgsMarkerSymbol, QgsGeometry,
-                QgsFeature, QgsField, QgsVectorFileWriter, QgsWkbTypes
+                QgsFeature, QgsField, QgsVectorFileWriter, QgsWkbTypes, QgsLayoutExporter,
+                QgsLayoutItemScaleBar, QgsLayoutItemPicture, QgsLayoutItemPage,
+                QgsLayoutTable, QgsLayoutItemAttributeTable, QgsUnitTypes, QgsLayoutPoint, QgsLayoutPoint,
+                QgsLayoutSize, QgsLayoutItemLabel
             )
             from PyQt5.QtCore import QVariant, QSize, QBuffer, QByteArray, QIODevice
             from PyQt5.QtGui import QImage, QPainter, QPen, QBrush, QFont, QColor
@@ -101,7 +107,19 @@ class QGISManager:
                 'QPen': QPen,
                 'QBrush': QBrush,
                 'QFont': QFont,
-                'QColor': QColor
+                'QColor': QColor,
+                'QgsLayoutExporter': QgsLayoutExporter,
+                'QgsLayoutItemScaleBar': QgsLayoutItemScaleBar,
+                'QgsLayoutItemPicture': QgsLayoutItemPicture,
+                'QgsLayoutItemPage': QgsLayoutItemPage,
+                'QgsLayoutTable': QgsLayoutTable,
+                'QgsLayoutItemAttributeTable': QgsLayoutItemAttributeTable,
+                'QgsUnitTypes': QgsUnitTypes,
+                'QgsLayoutPoint': QgsLayoutPoint,
+                'QgsLayoutSize': QgsLayoutSize,
+                'QgsLayoutFrame': QgsLayoutPoint,
+                'Qt': Qt,
+                'QgsLayoutItemLabel': QgsLayoutItemLabel
             }
             
             self._initialized = True
@@ -113,7 +131,15 @@ class QGISManager:
             self.init_errors.append(error_msg)
             logger.error(error_msg)
             return False, self.init_errors
-    
+
+    def _setup_qgis_environment(self):
+        """Configurer l'environnement QGIS"""
+        os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+        os.environ['QT_DEBUG_PLUGINS'] = '0'
+        os.environ['QT_QPA_FONTDIR'] = os.path.join(os.path.dirname(__file__), 'ttf')
+        os.environ['QT_NO_CPU_FEATURE'] = 'sse4.1,sse4.2,avx,avx2'
+        logger.info("Environnement QGIS configuré")
+
     def is_initialized(self):
         return self._initialized
         
@@ -333,7 +359,7 @@ def create_administrative_document_layout(
         QgsPrintLayout = classes['QgsPrintLayout']
         QgsLayoutItemMap = classes['QgsLayoutItemMap']
         QgsLayoutItemLegend = classes['QgsLayoutItemLegend']
-        QgsLayoutItemLabel = classes['QgsLayoutItemLabel']
+        Qt = classes['Qt']
         QgsLayoutItemScaleBar = classes['QgsLayoutItemScaleBar']
         QgsLayoutItemPicture = classes['QgsLayoutItemPicture']
         QgsLayoutItemPage = classes['QgsLayoutItemPage']
@@ -349,6 +375,7 @@ def create_administrative_document_layout(
         QFont = classes['QFont']
         QColor = classes['QColor']
         QgsLayoutFrame = classes['QgsLayoutFrame']
+        QgsLayoutItemLabel = classes['QgsLayoutItemLabel']
 
         # --- 1. Initialisation du Layout ---
         layout = QgsPrintLayout(project)
@@ -373,10 +400,9 @@ def create_administrative_document_layout(
         orientation = QgsLayoutItemPage.Portrait if orientation_str.lower() == "portrait" else QgsLayoutItemPage.Landscape
 
         page_collection = layout.pageCollection()
-        if page_collection.pageCount() > 0:
-            page = page_collection.page(0)
-            page.setPageSize(page_size, orientation)
-            # Note: Les marges du layout sont généralement gérées par le placement des éléments.
+        page = page_collection.pages()[0]
+        page.setPageSize(page_size, QgsLayoutItemPage.Portrait)
+       
 
         # --- 3. Création d'un dictionnaire des éléments pour référencement croisé ---
         layout_items = {} # {"map1": QgsLayoutItemMap, ...}
@@ -564,11 +590,11 @@ def create_administrative_document_layout(
 
                 # Alignement (simplifié)
                 if alignment.lower() == "center":
-                    label_item.setHAlign(QgsLayoutItemLabel.AlignHCenter)
+                    label_item.setHAlign(Qt.AlignHCenter)
                 elif alignment.lower() == "right":
-                    label_item.setHAlign(QgsLayoutItemLabel.AlignRight)
+                    label_item.setHAlign(Qt.AlignRight)
                 else: # Default/Left
-                    label_item.setHAlign(QgsLayoutItemLabel.AlignLeft)
+                    label_item.setHAlign(Qt.AlignLeft)
 
                 layout.addLayoutItem(label_item)
                 layout_items[label_id] = label_item
@@ -741,12 +767,101 @@ def export_layout(
         logger.error(f"Erreur lors de l'exportation du layout: {e}", exc_info=True)
         return False
 
+
+# Schémas de réponses Swagger
+project_response_schema = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={
+        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Indique si l\'opération a réussi'),
+        'timestamp': openapi.Schema(type=openapi.TYPE_STRING, format='date-time', description='Horodatage de la réponse'),
+        'message': openapi.Schema(type=openapi.TYPE_STRING, description='Message descriptif'),
+        'data': openapi.Schema(type=openapi.TYPE_OBJECT, description='Données de réponse'),
+        'error': openapi.Schema(type=openapi.TYPE_STRING, description='Message d\'erreur si applicable'),
+        'metadata': openapi.Schema(type=openapi.TYPE_OBJECT, description='Métadonnées supplémentaires')
+    }
+)
+
+layer_info_schema = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={
+        'id': openapi.Schema(type=openapi.TYPE_STRING, description='Identifiant unique de la couche'),
+        'name': openapi.Schema(type=openapi.TYPE_STRING, description='Nom de la couche'),
+        'type': openapi.Schema(type=openapi.TYPE_STRING, description='Type de couche (vector/raster)'),
+        'source': openapi.Schema(type=openapi.TYPE_STRING, description='Source de données de la couche'),
+        'extent': openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'xmin': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite ouest'),
+                'xmax': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite est'),
+                'ymin': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite sud'),
+                'ymax': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite nord'),
+            },
+            description='Étendue géographique de la couche'
+        )
+    }
+)
+
 class ProjectSessionViewSet(viewsets.ModelViewSet):
-    """ViewSet pour gérer les sessions de projet"""
+    """
+    ViewSet pour gérer les sessions de projet QGIS
+    
+    Permet de créer, gérer et manipuler des sessions de projet QGIS
+    avec persistance des données et gestion des couches.
+    """
     queryset = ProjectSession.objects.all()
     serializer_class = ProjectSessionSerializer
     lookup_field = 'session_id'
     
+    @swagger_auto_schema(
+        operation_id='create_qgis_project',
+        operation_description='Créer un nouveau projet QGIS avec session persistante',
+        operation_summary='Créer un projet QGIS',
+        tags=['Projets'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['title'],
+            properties={
+                'title': openapi.Schema(
+                    type=openapi.TYPE_STRING, 
+                    description='Titre du projet',
+                    example='Mon projet GIS'
+                ),
+                'description': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Description du projet',
+                    example='Projet d\'analyse spatiale pour la commune'
+                ),
+                'crs': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Système de coordonnées de référence',
+                    example='EPSG:4326',
+                    default='EPSG:4326'
+                )
+            }
+        ),
+        responses={
+            201: openapi.Response(
+                description='Projet créé avec succès',
+                schema=project_response_schema,
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'timestamp': '2024-01-15T10:30:00Z',
+                        'message': 'Projet créé avec succès',
+                        'data': {
+                            'session_id': 'abc123-def456',
+                            'title': 'Mon projet GIS',
+                            'description': 'Projet d\'analyse spatiale',
+                            'crs': 'EPSG:4326',
+                            'created_at': '2024-01-15T10:30:00Z'
+                        }
+                    }
+                }
+            ),
+            400: openapi.Response(description='Données invalides'),
+            500: openapi.Response(description='Erreur d\'initialisation QGIS')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='create')
     def create_project(self, request):
         """Créer un nouveau projet QGIS avec session persistante"""
@@ -773,6 +888,27 @@ class ProjectSessionViewSet(viewsets.ModelViewSet):
             "message": "Impossible de créer le projet"
         }, status=status.HTTP_400_BAD_REQUEST)
     
+    @swagger_auto_schema(
+        operation_id='save_qgis_project',
+        operation_description='Sauvegarder le projet QGIS de la session courante',
+        operation_summary='Sauvegarder un projet',
+        tags=['Projets'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'project_path': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Chemin de sauvegarde du projet (optionnel)',
+                    example='/path/to/project.qgs'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(description='Projet sauvegardé avec succès'),
+            404: openapi.Response(description='Session non trouvée'),
+            500: openapi.Response(description='Erreur lors de la sauvegarde')
+        }
+    )
     @action(detail=True, methods=['post'], url_path='save')
     def save_project(self, request, session_id=None):
         """Sauvegarder le projet de la session courante"""
@@ -816,6 +952,41 @@ class ProjectSessionViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return handle_exception(e, "save_project", "Impossible de sauvegarder le projet")
     
+    @swagger_auto_schema(
+        operation_id='get_project_info',
+        operation_description='Obtenir les informations détaillées du projet courant',
+        operation_summary='Informations du projet',
+        tags=['Projets'],
+        responses={
+            200: openapi.Response(
+                description='Informations du projet récupérées',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'session_id': openapi.Schema(type=openapi.TYPE_STRING, description='ID de session'),
+                                'title': openapi.Schema(type=openapi.TYPE_STRING, description='Titre du projet'),
+                                'crs': openapi.Schema(type=openapi.TYPE_STRING, description='Système de coordonnées'),
+                                'created_at': openapi.Schema(type=openapi.TYPE_STRING, format='date-time'),
+                                'layers_count': openapi.Schema(type=openapi.TYPE_INTEGER, description='Nombre de couches'),
+                                'project_file': openapi.Schema(type=openapi.TYPE_STRING, description='Fichier projet'),
+                                'layers': openapi.Schema(
+                                    type=openapi.TYPE_ARRAY,
+                                    items=layer_info_schema,
+                                    description='Liste des couches'
+                                )
+                            }
+                        )
+                    }
+                )
+            ),
+            404: openapi.Response(description='Session non trouvée'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=True, methods=['get'], url_path='info')
     def project_info(self, request, session_id=None):
         """Obtenir les informations détaillées du projet courant de la session"""
@@ -870,11 +1041,64 @@ class ProjectSessionViewSet(viewsets.ModelViewSet):
             return handle_exception(e, "project_info", "Impossible de récupérer les informations du projet")
 
 class LayerViewSet(viewsets.ModelViewSet):
-    """ViewSet pour gérer les couches"""
+    """
+    ViewSet pour gérer les couches QGIS
+    
+    Permet d'ajouter, supprimer et manipuler des couches vectorielles 
+    et raster dans les projets QGIS.
+    """
     queryset = Layer.objects.all()
     serializer_class = LayerSerializer
     lookup_field = 'id'
     
+    @swagger_auto_schema(
+        operation_id='add_vector_layer',
+        operation_description='Ajouter une couche vectorielle au projet QGIS',
+        operation_summary='Ajouter couche vectorielle',
+        tags=['Couches'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id', 'data_source'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet',
+                    example='abc123-def456'
+                ),
+                'data_source': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Chemin vers le fichier de données ou URL',
+                    example='/path/to/shapefile.shp'
+                ),
+                'layer_name': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Nom personnalisé pour la couche',
+                    example='Limites communales'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description='Couche vectorielle ajoutée avec succès',
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'message': 'Couche vectorielle ajoutée avec succès',
+                        'data': {
+                            'id': 'layer_123',
+                            'name': 'Limites communales',
+                            'layer_type': 'vector',
+                            'data_source': '/path/to/shapefile.shp',
+                            'feature_count': 45
+                        }
+                    }
+                }
+            ),
+            400: openapi.Response(description='Données invalides ou couche non valide'),
+            404: openapi.Response(description='Session ou fichier non trouvé'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='add-vector')
     def add_vector_layer(self, request):
         """Ajouter une couche vectorielle au projet"""
@@ -952,6 +1176,38 @@ class LayerViewSet(viewsets.ModelViewSet):
                 return handle_exception(e, "add_vector_layer", "Impossible d'ajouter la couche vectorielle")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    @swagger_auto_schema(
+        operation_id='add_raster_layer',
+        operation_description='Ajouter une couche raster au projet QGIS',
+        operation_summary='Ajouter couche raster',
+        tags=['Couches'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id', 'data_source'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet'
+                ),
+                'data_source': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Chemin vers le fichier raster ou URL',
+                    example='/path/to/satellite.tif'
+                ),
+                'layer_name': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Nom personnalisé pour la couche',
+                    example='Image satellite'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(description='Couche raster ajoutée avec succès'),
+            400: openapi.Response(description='Données invalides'),
+            404: openapi.Response(description='Session ou fichier non trouvé'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='add-raster')
     def add_raster_layer(self, request):
         """Ajouter une couche raster au projet"""
@@ -1027,7 +1283,92 @@ class LayerViewSet(viewsets.ModelViewSet):
             except Exception as e:
                 return handle_exception(e, "add_raster_layer", "Impossible d'ajouter la couche raster")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
+    @swagger_auto_schema(
+        operation_id='get_layer_features',
+        operation_description='Obtenir les entités d\'une couche avec pagination',
+        operation_summary='Entités de la couche',
+        tags=['Couches'],
+        manual_parameters=[
+            openapi.Parameter(
+                'session_id',
+                openapi.IN_QUERY,
+                description='ID de la session du projet',
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'page',
+                openapi.IN_QUERY,
+                description='Numéro de page (défaut: 1)',
+                type=openapi.TYPE_INTEGER,
+                default=1
+            ),
+            openapi.Parameter(
+                'limit',
+                openapi.IN_QUERY,
+                description='Nombre d\'entités par page (défaut: 50, max: 1000)',
+                type=openapi.TYPE_INTEGER,
+                default=50
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description='Entités récupérées avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'layer_id': openapi.Schema(type=openapi.TYPE_STRING),
+                                'layer_name': openapi.Schema(type=openapi.TYPE_STRING),
+                                'total_features': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                'requested_features': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                'offset': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                'limit': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                'has_more': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                                'features': openapi.Schema(
+                                    type=openapi.TYPE_ARRAY,
+                                    items=openapi.Schema(
+                                        type=openapi.TYPE_OBJECT,
+                                        properties={
+                                            'geometry': openapi.Schema(
+                                                type=openapi.TYPE_OBJECT,
+                                                properties={
+                                                    'type': openapi.Schema(type=openapi.TYPE_STRING),
+                                                    'wkt': openapi.Schema(type=openapi.TYPE_STRING)
+                                                }
+                                            )
+                                        }
+                                    )
+                                )
+                            }
+                        ),
+                        'metadata': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'session_id': openapi.Schema(type=openapi.TYPE_STRING),
+                                'pagination': openapi.Schema(
+                                    type=openapi.TYPE_OBJECT,
+                                    properties={
+                                        'current_page': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'total_pages': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'per_page': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'total_features': openapi.Schema(type=openapi.TYPE_INTEGER)
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            ),
+            404: openapi.Response(description='Couche ou session non trouvée'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=True, methods=['get'], url_path='features')
     def get_layer_features(self, request, id=None):
         """Obtenir les caractéristiques d'une couche avec pagination"""
@@ -1138,6 +1479,53 @@ class LayerViewSet(viewsets.ModelViewSet):
                 return handle_exception(e, "get_layer_features", "Impossible de récupérer les features de la couche")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    @swagger_auto_schema(
+        operation_id='get_layer_extent',
+        operation_description='Obtenir l\'étendue géographique d\'une couche',
+        operation_summary='Étendue de la couche',
+        tags=['Couches'],
+        manual_parameters=[
+            openapi.Parameter(
+                'session_id',
+                openapi.IN_QUERY,
+                description='ID de la session du projet',
+                type=openapi.TYPE_STRING,
+                required=True
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description='Étendue récupérée avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'xmin': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite ouest'),
+                                'ymin': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite sud'),
+                                'xmax': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite est'),
+                                'ymax': openapi.Schema(type=openapi.TYPE_NUMBER, description='Limite nord')
+                            }
+                        ),
+                        'metadata': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'session_id': openapi.Schema(type=openapi.TYPE_STRING),
+                                'layer_id': openapi.Schema(type=openapi.TYPE_STRING),
+                                'layer_type': openapi.Schema(type=openapi.TYPE_STRING),
+                                'feature_count': openapi.Schema(type=openapi.TYPE_INTEGER)
+                            }
+                        )
+                    }
+                )
+            ),
+            400: openapi.Response(description='Paramètres manquants'),
+            404: openapi.Response(description='Couche ou session non trouvée'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=True, methods=['get'], url_path='extent')
     def get_layer_extent(self, request, id=None):
         """Obtenir l'étendue géographique d'une couche"""
@@ -1210,6 +1598,40 @@ class LayerViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return handle_exception(e, "get_layer_extent", "Impossible de récupérer l'étendue de la couche")
     
+    @swagger_auto_schema(
+        operation_id='remove_layer',
+        operation_description='Supprimer une couche du projet QGIS',
+        operation_summary='Supprimer une couche',
+        tags=['Couches'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description='Couche supprimée avec succès',
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'message': 'Couche supprimée avec succès',
+                        'data': {
+                            'layer_id': 'layer_123',
+                            'session_id': 'abc123-def456'
+                        }
+                    }
+                }
+            ),
+            400: openapi.Response(description='session_id manquant'),
+            404: openapi.Response(description='Couche ou session non trouvée'),
+            500: openapi.Response(description='Erreur système')
+        }
+    )
     @action(detail=True, methods=['delete'], url_path='remove')
     def remove_layer(self, request, id=None):
         """Supprimer une couche du projet"""
@@ -1266,8 +1688,116 @@ class LayerViewSet(viewsets.ModelViewSet):
             return handle_exception(e, "remove_layer", "Impossible de supprimer la couche")
 
 class MapViewSet(viewsets.ViewSet):
-    """ViewSet pour les opérations de carte"""
+    """
+    ViewSet pour les opérations de rendu et manipulation de cartes
     
+    Permet de générer des rendus de carte, traiter des parcelles
+    et créer des documents cartographiques avancés.
+    """
+    
+    @swagger_auto_schema(
+        operation_id='render_map',
+        operation_description='Générer un rendu de carte avec options avancées de style et grille',
+        operation_summary='Rendu de carte',
+        tags=['Cartes'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet'
+                ),
+                'width': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='Largeur de l\'image en pixels',
+                    default=800,
+                    minimum=100,
+                    maximum=4000
+                ),
+                'height': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='Hauteur de l\'image en pixels',
+                    default=600,
+                    minimum=100,
+                    maximum=4000
+                ),
+                'dpi': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='Résolution en DPI',
+                    default=96,
+                    minimum=72,
+                    maximum=300
+                ),
+                'format_image': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Format de sortie',
+                    enum=['PNG', 'JPG'],
+                    default='PNG'
+                ),
+                'extent': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Étendue de la carte (xmin,ymin,xmax,ymax)',
+                    example='2.0,46.0,3.0,47.0'
+                ),
+                'background_color': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Couleur de fond au format hexadécimal',
+                    default='#FFFFFF',
+                    pattern='^#[0-9A-Fa-f]{6}'
+                                
+                ),
+                'enable_grid': openapi.Schema(
+                    type=openapi.TYPE_BOOLEAN,
+                    description='Activer la grille',
+                    default=False
+                ),
+                'grid_interval': openapi.Schema(
+                    type=openapi.TYPE_NUMBER,
+                    description='Intervalle de la grille en unités de carte',
+                    default=1000,
+                    minimum=1
+                ),
+                'grid_color': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Couleur de la grille',
+                    default='#CCCCCC'
+                ),
+                'enable_point_labels': openapi.Schema(
+                    type=openapi.TYPE_BOOLEAN,
+                    description='Activer les étiquettes des points',
+                    default=False
+                ),
+                'label_field': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Champ à utiliser pour les étiquettes',
+                    example='name'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description='Image de la carte générée',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    format=openapi.FORMAT_BINARY
+                ),
+                headers={
+                    'Content-Type': openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        description='Type MIME de l\'image'
+                    ),
+                    'Content-Disposition': openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        description='En-tête de disposition du contenu'
+                    )
+                }
+            ),
+            400: openapi.Response(description='Paramètres invalides'),
+            404: openapi.Response(description='Session non trouvée'),
+            500: openapi.Response(description='Erreur de rendu')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='render')
     def render_map(self, request):
         """Générer un rendu de carte avec options avancées"""
@@ -1349,8 +1879,7 @@ class MapViewSet(viewsets.ViewSet):
                 job.start()
                 
                 # Attendre la fin du rendu
-                while not job.finished():
-                    pass
+                job.waitForFinished()
                 
                 # Obtenir l'image rendue
                 image = job.renderedImage()
@@ -1381,6 +1910,75 @@ class MapViewSet(viewsets.ViewSet):
                 return handle_exception(e, "render_map", "Impossible de générer le rendu de la carte")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    @swagger_auto_schema(
+        operation_id='process_parcelle',
+        operation_description='Traiter une liste de points pour créer une parcelle et calculer sa superficie',
+        operation_summary='Traitement de parcelle',
+        tags=['Cartes'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id', 'points'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet'
+                ),
+                'points': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Liste des points au format JSON',
+                    example='[{"x": 2.5, "y": 46.5}, {"x": 2.6, "y": 46.5}, {"x": 2.6, "y": 46.6}, {"x": 2.5, "y": 46.6}]'
+                ),
+                'output_polygon_layer': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Nom de la couche polygone de sortie (optionnel)',
+                    example='Parcelle_cadastrale'
+                ),
+                'output_points_layer': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Nom de la couche points de sortie (optionnel)',
+                    example='Points_parcelle'
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description='Parcelle traitée avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'area_m2': openapi.Schema(
+                                    type=openapi.TYPE_NUMBER,
+                                    description='Superficie en mètres carrés'
+                                ),
+                                'points_count': openapi.Schema(
+                                    type=openapi.TYPE_INTEGER,
+                                    description='Nombre de points traités'
+                                )
+                            }
+                        ),
+                        'message': openapi.Schema(type=openapi.TYPE_STRING)
+                    }
+                ),
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'data': {
+                            'area_m2': 12584.5,
+                            'points_count': 4
+                        },
+                        'message': 'Parcelle traitée avec succès'
+                    }
+                }
+            ),
+            400: openapi.Response(description='Format des points invalide ou pas assez de points'),
+            404: openapi.Response(description='Session non trouvée'),
+            500: openapi.Response(description='Erreur de traitement')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='parcelle-detail')
     def parcelle_detail(self, request):
         """Traiter une liste de points pour créer une parcelle"""
@@ -1490,6 +2088,165 @@ class MapViewSet(viewsets.ViewSet):
                 return handle_exception(e, "parcelle_detail", "Impossible de traiter la parcelle")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    @swagger_auto_schema(
+        operation_id='generate_croquis',
+        operation_description='Générer un croquis ou document administratif complexe avec mise en page personnalisée',
+        operation_summary='Générer un croquis',
+        tags=['Documents'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['session_id', 'output_filename'],
+            properties={
+                'session_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID de la session du projet'
+                ),
+                'output_filename': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Nom du fichier de sortie avec extension',
+                    example='croquis_parcelle_2024.pdf'
+                ),
+                'format_croquis': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='Format de sortie du document',
+                    enum=['PDF', 'PNG', 'JPG'],
+                    default='PDF'
+                ),
+                'template_id': openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    description='ID du template à utiliser (optionnel)',
+                    example='template_123'
+                ),
+                'config': openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    description='Configuration avancée du document',
+                    properties={
+                        'document': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'title': openapi.Schema(type=openapi.TYPE_STRING, example='Croquis de localisation'),
+                                'page_size': openapi.Schema(type=openapi.TYPE_STRING, default='A4', enum=['A4', 'A3', 'A2', 'A1']),
+                                'orientation': openapi.Schema(type=openapi.TYPE_STRING, default='Portrait', enum=['Portrait', 'Landscape']),
+                                'margin_top': openapi.Schema(type=openapi.TYPE_NUMBER, default=10, description='Marge haut en mm'),
+                                'margin_bottom': openapi.Schema(type=openapi.TYPE_NUMBER, default=10),
+                                'margin_left': openapi.Schema(type=openapi.TYPE_NUMBER, default=10),
+                                'margin_right': openapi.Schema(type=openapi.TYPE_NUMBER, default=10)
+                            }
+                        ),
+                        'maps': openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=openapi.Schema(
+                                type=openapi.TYPE_OBJECT,
+                                properties={
+                                    'id': openapi.Schema(type=openapi.TYPE_STRING, example='map1'),
+                                    'x': openapi.Schema(type=openapi.TYPE_NUMBER, description='Position X en mm'),
+                                    'y': openapi.Schema(type=openapi.TYPE_NUMBER, description='Position Y en mm'),
+                                    'width': openapi.Schema(type=openapi.TYPE_NUMBER, description='Largeur en mm'),
+                                    'height': openapi.Schema(type=openapi.TYPE_NUMBER, description='Hauteur en mm'),
+                                    'layers': openapi.Schema(
+                                        type=openapi.TYPE_ARRAY,
+                                        items=openapi.Schema(type=openapi.TYPE_STRING),
+                                        description='IDs des couches à inclure'
+                                    ),
+                                    'scale': openapi.Schema(type=openapi.TYPE_INTEGER, description='Échelle de la carte')
+                                }
+                            )
+                        ),
+                        'legends': openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=openapi.Schema(
+                                type=openapi.TYPE_OBJECT,
+                                properties={
+                                    'id': openapi.Schema(type=openapi.TYPE_STRING),
+                                    'title': openapi.Schema(type=openapi.TYPE_STRING, default='Légende'),
+                                    'x': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'y': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'width': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'height': openapi.Schema(type=openapi.TYPE_NUMBER)
+                                }
+                            )
+                        ),
+                        'labels': openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=openapi.Schema(
+                                type=openapi.TYPE_OBJECT,
+                                properties={
+                                    'id': openapi.Schema(type=openapi.TYPE_STRING),
+                                    'text': openapi.Schema(type=openapi.TYPE_STRING),
+                                    'x': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'y': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'width': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'height': openapi.Schema(type=openapi.TYPE_NUMBER),
+                                    'font': openapi.Schema(
+                                        type=openapi.TYPE_OBJECT,
+                                        properties={
+                                            'family': openapi.Schema(type=openapi.TYPE_STRING, default='Arial'),
+                                            'size': openapi.Schema(type=openapi.TYPE_INTEGER, default=10),
+                                            'bold': openapi.Schema(type=openapi.TYPE_BOOLEAN, default=False)
+                                        }
+                                    )
+                                }
+                            )
+                        )
+                    },
+                    example={
+                        'document': {
+                            'title': 'Croquis de localisation',
+                            'page_size': 'A4',
+                            'orientation': 'Portrait'
+                        },
+                        'maps': [{
+                            'id': 'map1',
+                            'x': 10, 'y': 10, 'width': 150, 'height': 100,
+                            'scale': 5000
+                        }],
+                        'labels': [{
+                            'id': 'title',
+                            'text': 'Plan de situation',
+                            'x': 10, 'y': 5,'width': 50, 'height': 20,
+                            'font': {'family': 'Arial', 'size': 14, 'bold': True}
+                        }]
+                    }
+                )
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description='Croquis généré avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'file_id': openapi.Schema(type=openapi.TYPE_STRING, description='ID du fichier généré'),
+                                'file_url': openapi.Schema(type=openapi.TYPE_STRING, description='URL de téléchargement'),
+                                'output_filename': openapi.Schema(type=openapi.TYPE_STRING),
+                                'message': openapi.Schema(type=openapi.TYPE_STRING)
+                            }
+                        ),
+                        'message': openapi.Schema(type=openapi.TYPE_STRING)
+                    }
+                ),
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'data': {
+                            'file_id': 'gen_file_456',
+                            'file_url': '/media/croquis_parcelle_2024.pdf',
+                            'output_filename': 'croquis_parcelle_2024.pdf',
+                            'message': 'Croquis généré avec succès'
+                        },
+                        'message': 'Croquis généré et sauvegardé avec succès'
+                    }
+                }
+            ),
+            400: openapi.Response(description='Configuration invalide'),
+            404: openapi.Response(description='Session non trouvée'),
+            500: openapi.Response(description='Erreur de génération')
+        }
+    )
     @action(detail=False, methods=['post'], url_path='generate-croquis')
     def generate_croquis(self, request):
         """Générer un croquis avec options avancées"""
@@ -1599,11 +2356,94 @@ class MapViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class FileViewSet(viewsets.ViewSet):
-    """ViewSet pour gérer les fichiers"""
-
+    """
+    ViewSet pour la gestion des fichiers
+    
+    Permet le téléchargement, la liste et le téléchargement de fichiers
+    avec support multi-format et organisation par session.
+    """
     parser_classes = (MultiPartParser, FormParser)
 
-    @action(detail=False, methods=['post'], url_path='upload', permission_classes=[AllowAny]) # Ou une permission plus stricte
+    @swagger_auto_schema(
+        operation_id='upload_file',
+        operation_description='Télécharger un fichier dans le système de stockage',
+        operation_summary='Télécharger un fichier',
+        tags=['Fichiers'],
+        consumes=['multipart/form-data'],
+        manual_parameters=[
+            openapi.Parameter(
+                'file',
+                openapi.IN_FORM,
+                description='Fichier à télécharger',
+                type=openapi.TYPE_FILE,
+                required=True
+            ),
+            openapi.Parameter(
+                'session_id',
+                openapi.IN_FORM,
+                description='ID de la session (optionnel, pour organiser les fichiers)',
+                type=openapi.TYPE_STRING,
+                required=False
+            ),
+            openapi.Parameter(
+                'custom_name',
+                openapi.IN_FORM,
+                description='Nom personnalisé pour le fichier (optionnel)',
+                type=openapi.TYPE_STRING,
+                required=False
+            ),
+            openapi.Parameter(
+                'file_type',
+                openapi.IN_FORM,
+                description='Type de fichier pour la classification',
+                type=openapi.TYPE_STRING,
+                enum=['shapefile', 'raster', 'document', 'template', 'other'],
+                default='other',
+                required=False
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description='Fichier téléchargé avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'message': openapi.Schema(type=openapi.TYPE_STRING),
+                                'file_name': openapi.Schema(type=openapi.TYPE_STRING, description='Nom final du fichier'),
+                                'file_path': openapi.Schema(type=openapi.TYPE_STRING, description='Chemin absolu sur le serveur'),
+                                'file_url': openapi.Schema(type=openapi.TYPE_STRING, description='URL d\'accès au fichier'),
+                                'size': openapi.Schema(type=openapi.TYPE_INTEGER, description='Taille en octets'),
+                                'content_type': openapi.Schema(type=openapi.TYPE_STRING, description='Type MIME')
+                            }
+                        ),
+                        'message': openapi.Schema(type=openapi.TYPE_STRING)
+                    }
+                ),
+                examples={
+                    'application/json': {
+                        'success': True,
+                        'data': {
+                            'message': 'Fichier téléchargé avec succès',
+                            'file_name': 'commune_limites.shp',
+                            'file_url': '/media/uploads/session123/commune_limites.shp',
+                            'size': 15420,
+                            'content_type': 'application/octet-stream'
+                        },
+                        'message': 'Fichier téléchargé avec succès'
+                    }
+                }
+            ),
+            400: openapi.Response(description='Données de téléchargement invalides ou session inexistante'),
+            413: openapi.Response(description='Fichier trop volumineux'),
+            415: openapi.Response(description='Type de fichier non supporté'),
+            500: openapi.Response(description='Erreur lors du téléchargement')
+        }
+    )
+    @action(detail=False, methods=['post'], url_path='upload', permission_classes=[AllowAny])
     def upload_file(self, request):
         """
         Télécharger un fichier dans le répertoire MEDIA.
@@ -1656,16 +2496,16 @@ class FileViewSet(viewsets.ViewSet):
                 # 5. (Optionnel) Enregistrer dans la base de données
                 # Si vous voulez garder une trace dans GeneratedFile ou un nouveau modèle
                 # Par exemple, en utilisant un modèle FileRecord ou en réutilisant GeneratedFile
-                # generated_file_db = GeneratedFile.objects.create(
-                #     session=ProjectSession.objects.get(session_id=session_id) if session_id else None,
-                #     file_type=file_type.split('_')[0] if '_' in file_type else file_type, # Simplifier le type
-                #     file_path=full_file_path,
-                #     metadata={
-                #         'original_name': uploaded_file.name,
-                #         'size': uploaded_file.size,
-                #         'content_type': uploaded_file.content_type
-                #     }
-                # )
+                generated_file_db = GeneratedFile.objects.create(
+                    session=ProjectSession.objects.get(session_id=session_id) if session_id else None,
+                    file_type=file_type.split('_')[0] if '_' in file_type else file_type, # Simplifier le type
+                    file_path=full_file_path,
+                    metadata={
+                        'original_name': uploaded_file.name,
+                        'size': uploaded_file.size,
+                        'content_type': uploaded_file.content_type
+                    }
+                )
                 
                 # 6. Préparer l'URL d'accès (si vous avez MEDIA_URL configuré)
                 relative_path = os.path.relpath(full_file_path, settings.MEDIA_ROOT)
@@ -1704,6 +2544,83 @@ class FileViewSet(viewsets.ViewSet):
             )
 
     
+    @swagger_auto_schema(
+        operation_id='list_files',
+        operation_description='Lister les fichiers disponibles avec pagination et filtrage',
+        operation_summary='Lister les fichiers',
+        tags=['Fichiers'],
+        manual_parameters=[
+            openapi.Parameter(
+                'directory',
+                openapi.IN_QUERY,
+                description='Sous-répertoire à explorer (optionnel)',
+                type=openapi.TYPE_STRING,
+                example='uploads/session123'
+            ),
+            openapi.Parameter(
+                'type',
+                openapi.IN_QUERY,
+                description='Filtrer par type de fichier',
+                type=openapi.TYPE_STRING,
+                enum=['all', 'image', 'document', 'other'],
+                default='all'
+            ),
+            openapi.Parameter(
+                'page',
+                openapi.IN_QUERY,
+                description='Numéro de page',
+                type=openapi.TYPE_INTEGER,
+                default=1
+            ),
+            openapi.Parameter(
+                'per_page',
+                openapi.IN_QUERY,
+                description='Nombre de fichiers par page',
+                type=openapi.TYPE_INTEGER,
+                default=20,
+                maximum=100
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description='Liste des fichiers récupérée avec succès',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                        'data': openapi.Schema(
+                            type=openapi.TYPE_OBJECT,
+                            properties={
+                                'files': openapi.Schema(
+                                    type=openapi.TYPE_ARRAY,
+                                    items=openapi.Schema(
+                                        type=openapi.TYPE_OBJECT,
+                                        properties={
+                                            'name': openapi.Schema(type=openapi.TYPE_STRING),
+                                            'size': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                            'modified': openapi.Schema(type=openapi.TYPE_STRING, format='date-time'),
+                                            'type': openapi.Schema(type=openapi.TYPE_STRING, enum=['image', 'document', 'other'])
+                                        }
+                                    )
+                                ),
+                                'pagination': openapi.Schema(
+                                    type=openapi.TYPE_OBJECT,
+                                    properties={
+                                        'current_page': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'total_pages': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'per_page': openapi.Schema(type=openapi.TYPE_INTEGER),
+                                        'total_count': openapi.Schema(type=openapi.TYPE_INTEGER)
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            ),
+            404: openapi.Response(description='Répertoire non trouvé'),
+            500: openapi.Response(description='Erreur lors de la lecture')
+        }
+    )
     @action(detail=False, methods=['get'], url_path='list')
     def list_files(self, request):
         """Lister les fichiers dans le répertoire MEDIA"""
@@ -1770,6 +2687,28 @@ class FileViewSet(viewsets.ViewSet):
         except Exception as e:
             return handle_exception(e, "list_files", "Impossible de lister les fichiers")
     
+    
+    @swagger_auto_schema(
+        operation_id='download_file',
+        operation_description='Télécharger un fichier généré par le système',
+        operation_summary='Télécharger un fichier',
+        tags=['Fichiers'],
+        responses={
+            200: openapi.Response(
+                description='Fichier téléchargé',
+                schema=openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                    format=openapi.FORMAT_BINARY
+                ),
+                headers={
+                    'Content-Type': openapi.Schema(type=openapi.TYPE_STRING),
+                    'Content-Disposition': openapi.Schema(type=openapi.TYPE_STRING)
+                }
+            ),
+            404: openapi.Response(description='Fichier non trouvé'),
+            500: openapi.Response(description='Erreur de téléchargement')
+        }
+    )
     @action(detail=True, methods=['get'], url_path='download')
     def download_file(self, request, pk=None):
         """Télécharger un fichier généré"""
@@ -1800,3 +2739,6 @@ class FileViewSet(viewsets.ViewSet):
             )
         except Exception as e:
             return handle_exception(e, "download_file", "Impossible de télécharger le fichier")
+
+
+initialize_qgis_if_needed()
